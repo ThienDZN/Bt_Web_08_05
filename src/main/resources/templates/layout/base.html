@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title th:text="${pageTitle} ?: 'Quản lý danh mục'">Quản lý danh mục</title>
+    <link rel="stylesheet" th:href="@{/assets/app-theme.css}">
+</head>
+<body class="theme-music">
+<header class="student-header">
+    <div class="student-header__inner">
+        <img class="student-avatar" th:src="@{/assets/cafafef22252a30cfa43.jpg}"
+             alt="Ảnh đại diện sinh viên Thiện DZN">
+        <div>
+            <div class="decorator-badge">Thymeleaf Layout Dialect</div>
+            <h1>Category CRUD</h1>
+            <p>Bản chuyển đổi từ giao diện bài 05 sang Bài 06 với Spring Boot và Thymeleaf.</p>
+        </div>
+        <nav class="student-header__links" aria-label="Điều hướng chính">
+            <a th:href="@{/admin/categories}">Danh mục</a>
+            <a th:href="@{/home}">Trang chủ</a>
+        </nav>
+    </div>
+</header>
+
+<main layout:fragment="content">
+    <div class="theme-shell">Nội dung trang</div>
+</main>
+
+<footer class="student-footer">
+    <p>Sinh viên thực hiện: <strong>Thiện DZN</strong> · MSSV: <strong>24162120</strong></p>
+    <p>Học phần Lập trình Web · Assignment 06 · Thymeleaf Layout Dialect</p>
+</footer>
+</body>
+</html>

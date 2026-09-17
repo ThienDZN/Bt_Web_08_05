@@ -1,0 +1,7 @@
+/target/
+/data/
+/uploads/
+/.settings/
+/.classpath
+/.project
+/.factorypath

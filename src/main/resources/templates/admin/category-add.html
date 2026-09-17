@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/base}">
+<body>
+<main layout:fragment="content">
+    <div class="theme-shell">
+        <div class="panel form-shell">
+            <div class="eyebrow">Admin Category</div>
+            <h1>Create Category</h1>
+            <div class="error-box" th:if="${error}" th:text="${error}"></div>
+            <form th:action="@{/admin/category/insert}" th:object="${cate}" method="post" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label for="categoryname">Category Name</label>
+                    <input class="form-input" th:classappend="${errors.containsKey('categoryname')} ? ' is-invalid' : ''"
+                           type="text" th:field="*{categoryname}" maxlength="50" placeholder="Enter category name">
+                    <div class="invalid-feedback d-block" th:if="${errors.containsKey('categoryname')}"
+                         th:text="${errors['categoryname']}"></div>
+                </div>
+                <div class="form-group">
+                    <label for="images">Image URL</label>
+                    <input class="form-input" th:classappend="${errors.containsKey('images')} ? ' is-invalid' : ''"
+                           type="url" th:field="*{images}" maxlength="500" placeholder="https://...">
+                    <div class="invalid-feedback d-block" th:if="${errors.containsKey('images')}"
+                         th:text="${errors['images']}"></div>
+                </div>
+                <div class="form-group">
+                    <label for="images1">Upload Image</label>
+                    <input id="images1" name="images1" class="form-file"
+                           th:classappend="${errors.containsKey('images1')} ? ' is-invalid' : ''"
+                           type="file" accept="image/*">
+                    <div class="invalid-feedback d-block" th:if="${errors.containsKey('images1')}"
+                         th:text="${errors['images1']}"></div>
+                </div>
+                <div class="form-group">
+                    <label>Status</label>
+                    <div class="radio-row">
+                        <label><input type="radio" th:field="*{status}" value="1"> Visible</label>
+                        <label><input type="radio" th:field="*{status}" value="0"> Locked</label>
+                    </div>
+                    <div class="invalid-feedback d-block" th:if="${errors.containsKey('status')}"
+                         th:text="${errors['status']}"></div>
+                </div>
+                <div class="form-actions">
+                    <button class="btn btn-primary" type="submit">Create Category</button>
+                    <a class="btn btn-secondary" th:href="@{/admin/categories}">Back to Categories</a>
+                    <a class="btn btn-secondary" th:href="@{/admin/users}">Users</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</main>
+</body>
+</html>

@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/base}">
+<body>
+<main layout:fragment="content">
+    <div class="theme-shell">
+        <div class="theme-nav">
+            <div class="theme-brand">
+                Category Management
+                <small>One-to-many relation support for the assignment catalog entries</small>
+            </div>
+            <div class="theme-nav-links">
+                <a class="btn btn-secondary" th:href="@{/home}">Home</a>
+                <a class="btn btn-secondary" th:href="@{/admin/products}">Catalog</a>
+                <a class="btn btn-secondary" th:href="@{/admin/users}">Users</a>
+                <a class="btn btn-secondary" th:href="@{/profile}">Profile</a>
+                <a class="btn btn-primary" th:href="@{/admin/category/add}">Add Category</a>
+                <a class="btn btn-secondary" th:href="@{/logout}">Logout</a>
+            </div>
+        </div>
+
+        <div class="message-box" th:if="${message}" th:text="${message}"></div>
+
+        <section class="panel section-panel">
+            <div class="section-head">
+                <div>
+                    <h1>Category table</h1>
+                    <p>Total categories: <span th:text="${#lists.size(listcate)}">0</span></p>
+                </div>
+            </div>
+
+            <form th:action="@{/admin/categories}" method="get" class="search-row">
+                <input class="form-input" th:classappend="${errors.containsKey('keyword')} ? ' is-invalid' : ''"
+                       type="text" name="keyword" th:value="${keyword}" maxlength="50"
+                       placeholder="Search by category name">
+                <button class="btn btn-primary" type="submit">Search</button>
+                <a class="btn btn-secondary" th:href="@{/admin/categories}">Reset</a>
+                <div class="invalid-feedback d-block" th:if="${errors.containsKey('keyword')}"
+                     th:text="${errors['keyword']}"></div>
+            </form>
+
+            <div class="empty-box" th:if="${#lists.isEmpty(listcate)}">There are no categories yet.</div>
+            <table class="data-table" th:unless="${#lists.isEmpty(listcate)}">
+                <thead>
+                <tr>
+                    <th>No.</th>
+                    <th>Image</th>
+                    <th>Name</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="cate, stat : ${listcate}">
+                    <td th:text="${stat.count}">1</td>
+                    <td>
+                        <img class="table-thumb" th:if="${#strings.isEmpty(cate.images)}"
+                             th:src="@{/assets/no-image.svg}" alt="No image">
+                        <img class="table-thumb" th:if="${!#strings.isEmpty(cate.images) and (#strings.startsWith(cate.images, 'http://') or #strings.startsWith(cate.images, 'https://'))}"
+                             th:src="${cate.images}" th:alt="${cate.categoryname}">
+                        <img class="table-thumb" th:if="${!#strings.isEmpty(cate.images) and !#strings.startsWith(cate.images, 'http://') and !#strings.startsWith(cate.images, 'https://')}"
+                             th:src="@{/image(fname=${cate.images})}" th:alt="${cate.categoryname}">
+                    </td>
+                    <td th:text="${cate.categoryname}">Category name</td>
+                    <td th:text="${cate.status == 1 ? 'Visible' : 'Locked'}">Visible</td>
+                    <td>
+                        <div class="action-row">
+                            <a class="btn btn-secondary" th:href="@{/admin/category/edit(id=${cate.categoryid})}">Edit</a>
+                            <form th:action="@{/admin/category/delete}" method="post" class="inline-action-form">
+                                <input type="hidden" name="id" th:value="${cate.categoryid}">
+                                <button class="btn btn-danger" type="submit">Delete</button>
+                            </form>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </section>
+    </div>
+</main>
+</body>
+</html>

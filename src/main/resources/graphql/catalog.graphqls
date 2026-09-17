@@ -1,0 +1,67 @@
+type Query {
+    productsByPrice: [Product!]!
+    productsByCategory(categoryId: ID!): [Product!]!
+    products(keyword: String, page: Int = 1, size: Int = 6): ProductPage!
+    categories(keyword: String, page: Int = 1, size: Int = 6): CategoryPage!
+    product(id: ID!): Product
+    category(id: ID!): Category
+}
+
+type Mutation {
+    createProduct(input: ProductInput!): Product!
+    updateProduct(id: ID!, input: ProductInput!): Product!
+    deleteProduct(id: ID!): Boolean!
+    createCategory(input: CategoryInput!): Category!
+    updateCategory(id: ID!, input: CategoryInput!): Category!
+    deleteCategory(id: ID!): Boolean!
+}
+
+type Product {
+    productId: ID!
+    productName: String!
+    description: String
+    price: Float!
+    quantity: Int!
+    image: String
+    status: Int!
+    category: Category!
+}
+
+type Category {
+    categoryId: ID!
+    categoryName: String!
+    image: String
+    status: Int!
+}
+
+type ProductPage {
+    items: [Product!]!
+    page: Int!
+    size: Int!
+    totalItems: Int!
+    totalPages: Int!
+}
+
+type CategoryPage {
+    items: [Category!]!
+    page: Int!
+    size: Int!
+    totalItems: Int!
+    totalPages: Int!
+}
+
+input ProductInput {
+    productName: String!
+    description: String
+    price: Float!
+    quantity: Int!
+    image: String
+    status: Int!
+    categoryId: ID!
+}
+
+input CategoryInput {
+    categoryName: String!
+    image: String
+    status: Int!
+}
